@@ -2129,6 +2129,20 @@ final class DeclarationTests: XCTestCase {
     )
   }
 
+  func testMissingEqualInVariableDeclaration() {
+    assertParse(
+      """
+      let a: [Int] 1️⃣[]
+      """,
+      diagnostics: [
+        DiagnosticSpec(message: "expected '=' in variable", fixIts: ["insert '='"])
+      ],
+      fixedSource: """
+        let a: [Int] = []
+        """
+    )
+  }
+
   func testMissingExpressionInVariableAssignment() {
     assertParse(
       """

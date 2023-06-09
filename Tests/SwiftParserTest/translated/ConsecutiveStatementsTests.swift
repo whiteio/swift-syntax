@@ -55,15 +55,15 @@ final class ConsecutiveStatementsTests: XCTestCase {
         if i != j { i = j }
         // Errors
         i = j1️⃣ j = i
-        let r : Int2️⃣ i = j
-        let s : Int3️⃣ let t : Int
+        let r : Int 2️⃣i 3️⃣= j
+        let s : Int let t : Int
         _ = r; _ = s; _ = t
       }
       """,
       diagnostics: [
         DiagnosticSpec(locationMarker: "1️⃣", message: "consecutive statements on a line must be separated by ';'", fixIts: ["insert ';'"]),
-        DiagnosticSpec(locationMarker: "2️⃣", message: "consecutive statements on a line must be separated by ';'", fixIts: ["insert ';'"]),
-        DiagnosticSpec(locationMarker: "3️⃣", message: "consecutive statements on a line must be separated by ';'", fixIts: ["insert ';'"]),
+        DiagnosticSpec(locationMarker: "2️⃣", message: "expected '=' in variable", fixIts: ["insert '='"]),
+        DiagnosticSpec(locationMarker: "3️⃣", message: "unexpected code '= j' before variable"),
       ],
       fixedSource: """
         // Within a function
@@ -73,8 +73,8 @@ final class ConsecutiveStatementsTests: XCTestCase {
           if i != j { i = j }
           // Errors
           i = j; j = i
-          let r : Int; i = j
-          let s : Int; let t : Int
+          let r : Int = i = j
+          let s : Int let t : Int
           _ = r; _ = s; _ = t
         }
         """

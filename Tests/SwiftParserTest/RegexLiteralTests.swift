@@ -1211,14 +1211,14 @@ final class RegexLiteralTests: XCTestCase {
   func testPrefixOpSplitting2() {
     assertParse(
       """
-      let x1️⃣ .2️⃣/abc/
+      let x 1️⃣.2️⃣/abc/
       """,
       diagnostics: [
-        DiagnosticSpec(locationMarker: "1️⃣", message: "consecutive statements on a line must be separated by ';'", fixIts: ["insert ';'"]),
+        DiagnosticSpec(locationMarker: "1️⃣", message: "expected '=' in variable", fixIts: ["insert '='"]),
         DiagnosticSpec(locationMarker: "2️⃣", message: "expected name in member access", fixIts: ["insert name"]),
       ],
       fixedSource: """
-        let x; .<#identifier#>/abc/
+        let x = .<#identifier#>/abc/
         """
     )
   }

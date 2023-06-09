@@ -47,7 +47,7 @@ final class RecoveryTests: XCTestCase {
     assertParse(
       """
       func useContainer() -> () {
-        var a : Containerℹ️<not 1️⃣a2️⃣ type [skip 3️⃣this greater: >] >4️⃣, b : Int
+        var a : Containerℹ️<not 1️⃣2️⃣a type [skip 3️⃣this greater: >] >4️⃣, b : Int
         b = 5 // no-warning
         a.exists()
       }
@@ -61,8 +61,8 @@ final class RecoveryTests: XCTestCase {
         ),
         DiagnosticSpec(
           locationMarker: "2️⃣",
-          message: "consecutive statements on a line must be separated by ';'",
-          fixIts: ["insert ';'"]
+          message: "expected '=' in variable",
+          fixIts: ["insert '='"]
         ),
         DiagnosticSpec(
           locationMarker: "3️⃣",
@@ -80,7 +80,7 @@ final class RecoveryTests: XCTestCase {
       ],
       fixedSource: """
         func useContainer() -> () {
-          var a : Container<not>a; type [skip this greater: >] > <#expression#>, b : Int
+          var a : Container<not> = a type [skip this greater: >] > <#expression#>, b : Int
           b = 5 // no-warning
           a.exists()
         }
